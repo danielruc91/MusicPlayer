@@ -1,2 +1,2 @@
 # MusicPlayer
-Control music palyer through light web interface
+Control music palyer through light weight web interface
