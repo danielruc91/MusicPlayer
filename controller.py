@@ -19,7 +19,7 @@ class controller:
     def start(self):
         """ Blockingly play musics
         """
-        if 0 == len(self.m):
+        if 0 == len(self.musics):
             raise "Did not find any music file under this folder."
 
         while True:
@@ -48,4 +48,4 @@ if __name__ == "__main__":
     arguments = parser.parse_args()
     con = controller(arguments.path)
 
-    con.play()
+    con.start()

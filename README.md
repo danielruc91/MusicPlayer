@@ -29,7 +29,7 @@ But you can always supply a specific path to look for files.
 ## How to use
 Currently, I have finished the controller part. You can run the playing function by simply in your shell:
 ```shell
-python -m controller <path>
+python controller.py <path>
 ```
 
 I am working hard on the server part, but please be notified that I am lazy...
