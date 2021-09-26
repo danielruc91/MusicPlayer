@@ -1,9 +1,7 @@
+import pathlib
 import random
 from typing import List, Union
 import os
-import asyncio
-from subprocess import Popen
-import sys
 import argparse
 import logging
 
@@ -21,6 +19,9 @@ class controller:
     def start(self):
         """ Blockingly play musics
         """
+        if 0 == len(self.m):
+            raise "Did not find any music file under this folder."
+
         while True:
             m = self.NextSong()
             logging.info(m)
@@ -39,7 +40,7 @@ class controller:
 
 
 if __name__ == "__main__":
-    p = os.environ['Music']
+    p = os.path.join(pathlib.Path.home(), "Music")
 
     parser = argparse.ArgumentParser(description="Simple music player.")
     parser.add_argument("path", metavar="path", nargs='?', default=p,
