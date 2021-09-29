@@ -25,7 +25,7 @@ class player:
         tmp = {}
         for dirpath, _, filenames in os.walk(path):
             for name in filenames:
-                if name.endswidth(".flac"):
+                if name.endswith(".flac"):
                     f = os.path.join(dirpath, name)
                     if not isSonata(f):
                         self.musics.append([f])
