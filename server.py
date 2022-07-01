@@ -9,13 +9,10 @@ import http.server
 import urllib.parse as parse
 import time
 
-
 from player import player
 import config
 from threading import Thread
 
-with open("index.html", 'r') as f:
-    INDEXPAGE = f.read().encode()
 
 with open('favicon.ico', 'rb') as f:
     ICO = f.read()
