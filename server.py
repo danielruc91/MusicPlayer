@@ -6,6 +6,7 @@ import multiprocessing
 import os
 
 import http.server
+import urllib.parse as parse
 import time
 
 
@@ -16,18 +17,31 @@ from threading import Thread
 with open("index.html", 'r') as f:
     INDEXPAGE = f.read().encode()
 
+with open('favicon.ico', 'rb') as f:
+    ICO = f.read()
+
 
 class controller:
     def __init__(self) -> None:
-        self.player = player(config.DefaultPath)
+        self.player = player()
         self.T = None
 
-    def start(self):
+    def set_musics(self, albums):
+        paths = [ config.ALBUMS[album] for album in albums ]
+        self.player.set_musics(paths)
+
+    def start(self, albums = None):
         if self.T == None:
+            # Currently not playing
+            if albums:
+                # need to set new musics
+                self.set_musics(albums)
+            
             self.T = Thread(target=self.player.start)
             self.T.start()
 
     def stop(self):
+        print(self.player.isplaying())
         if self.player.isplaying():
             self.player.stop()
             self.T.join()
@@ -54,22 +68,24 @@ class MPHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         """Serve a GET request."""
-        command = str(self.path)
+        url = parse.urlparse(self.path)
 
-        print(command)
-
-        if command == r"/Start?":
-            CON.start()
-        elif command == r"/Stop?":
+        if url.path == r"/Start":
+            query = parse.parse_qs(url.query)
+            CON.start(query["albums"])
+        elif url.path == r"/Stop":
             CON.stop()
-        elif command == r"/Next?":
+        elif url.path == r"/Next":
             CON.next()
 
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
 
-        self.wfile.write(INDEXPAGE)
+        if url.path == r'/favicon.ico':
+            self.wfile.write(ICO)
+        else:
+            self.wfile.write(config.HTML)
 
 
 def test(HandlerClass=MPHandler,

@@ -15,23 +15,17 @@ Try out this tiny toy controller!
 
 
 ## Requirements
-The project is written in python, so the machine shall be able to run Python. (Yeah, Raspberry Pi is a good option! Consider adding a professional DAC hat for it!)
 
 The projetc use ffplay to play, so you need to make sure it is discoverable by your shell. (On windows, this means adding ffplay to your Path environment variable).
 
-It uses 'Music' folder under your home directory as the folder of your music collection. It will loop into the folder recursively to get all flac files.
-1. On windows, this means 'C:/Users/USERNAME/Music'
-2. On Linux, this means '~/Music'
-
-But you can always supply a specific path to look for files.
+It uses 'Music' environment variable to look for albums, but you can always supply a specific path to look for files.
 
 
 ## How to use
-Currently, I have finished the controller part. You can run the playing function by simply in your shell:
+
+The server.py will host a simple http server on the machine.
 ```shell
-python controller.py <path>
+python server.py
 ```
 
-I am working hard on the server part, but please be notified that I am lazy...
-
-Good luck!
+Run the above shell and navigate to `127.0.0.1:8000` to see the page.
